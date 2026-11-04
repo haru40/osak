@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오싹</title>
+<meta name="theme-color" content="#1f7a4f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="오싹">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="images/icons/icon-192.png">
+<link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="installBanner" class="installBanner" hidden>
+  <div class="installRow">
+    <span>📲 오싹을 앱으로 설치해보세요</span>
+    <button class="btn primary" type="button" onclick="startInstall()">설치</button>
+    <button class="installClose" type="button" aria-label="설치 안내 닫기" onclick="dismissInstall()">×</button>
+  </div>
+  <p id="installGuide" hidden></p>
+</div>
+<section id="authShell" class="authShell">
+  <div class="authPanel">
+    <div class="authBrand">
+      <div>
+        <h1>오싹</h1>
+        <p>남은 재료로, 오늘도 냉장고 싹.</p>
+      </div>
+    </div>
+    <div class="authHeading">
+      <h2 id="authTitle">로그인</h2>
+      <p id="authDescription">오늘도싹에 로그인하고 냉장고를 확인하세요.</p>
+    </div>
+    <form id="authForm" class="authForm" novalidate>
+      <label for="authEmail">이메일</label>
+      <input id="authEmail" type="email" inputmode="email" autocomplete="email" placeholder="이메일 입력">
+      <label for="authPassword">비밀번호</label>
+      <input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="비밀번호 입력">
+      <label for="authPasswordConfirm" hidden>새 비밀번호 확인</label>
+      <input id="authPasswordConfirm" type="password" autocomplete="new-password" minlength="6" placeholder="새 비밀번호 다시 입력" hidden>
+      <div id="authMessage" class="authMessage" role="status" aria-live="polite"></div>
+      <button id="authSubmitBtn" class="btn primary authSubmitBtn" type="submit">로그인</button>
+    </form>
+    <div class="authSwitch"><button id="authForgotBtn" type="button">비밀번호 찾기</button></div>
+    <div class="authSwitch">
+      <span id="authSwitchText">계정이 없나요?</span>
+      <button id="authSwitchBtn" type="button">회원가입</button>
+    </div>
+  </div>
+</section>
+
+<div id="appShell" hidden>
+<div class="page">
+  <div class="wrap">
+    <div class="caption">핸드폰 목업 안에서 실제로 눌러볼 수 있는 버전 · 요리 완료 시 재료 자동 차감 / 만든 메뉴 숨김 반영</div>
+
+    <div class="shell">
+      <div class="notch"></div>
+      <div class="screen landing">
+        <div class="content">
+          <div class="topbar">
+            <div class="brand">
+              <div>
+                <h1>오싹</h1>
+                <small>남은 재료로, 오늘도 냉장고 싹.</small>
+              </div>
+            </div>
+            <div class="authUserBar">
+              <span id="authUserEmail"></span>
+              <button id="logoutBtn" type="button">로그아웃</button>
+            </div>
+          </div>
+
+          <section id="landingView" class="view active">
+            <div class="fridgeScene">
+              <div class="fridgeStage">
+                  <svg class="fridgeWalls" viewBox="0 0 1200 1680" preserveAspectRatio="none" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="fridgeCeil" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eaf3f9"/><stop offset="1" stop-color="#bcd8ec"/></linearGradient>
+                      <linearGradient id="fridgeLeft" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f4f9fc"/><stop offset=".55" stop-color="#d3e6f3"/><stop offset="1" stop-color="#a9cce4"/></linearGradient>
+                      <linearGradient id="fridgeRight" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#f4f9fc"/><stop offset=".55" stop-color="#d3e6f3"/><stop offset="1" stop-color="#a9cce4"/></linearGradient>
+                      <linearGradient id="fridgeSteel" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b9bfc4"/><stop offset=".45" stop-color="#dadddf"/><stop offset=".6" stop-color="#eceded"/><stop offset=".8" stop-color="#c3c7ca"/><stop offset="1" stop-color="#aeb5ba"/></linearGradient>
+                      <linearGradient id="fridgeEdge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#f1ece4"/><stop offset="1" stop-color="#c9c4bb"/></linearGradient>
+                      <linearGradient id="fridgeBase" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5f676d"/><stop offset="1" stop-color="#8d9499"/></linearGradient>
+                      <linearGradient id="fridgeDrop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f4d57" stop-opacity=".34"/><stop offset="1" stop-color="#3f4d57" stop-opacity="0"/></linearGradient>
+                      <radialGradient id="fridgeGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffffff" stop-opacity=".95"/><stop offset="1" stop-color="#cfe6f7" stop-opacity="0"/></radialGradient>
+                      <filter id="fridgeSoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="46"/></filter>
+                    </defs>
+                    <rect x="280" y="370" width="676" height="1070" fill="url(#fridgeSteel)"/>
+                    <ellipse cx="640" cy="1190" rx="170" ry="260" fill="#c79a66" opacity=".55" filter="url(#fridgeSoft)"/>
+                    <ellipse cx="760" cy="740" rx="70" ry="220" fill="#d9b48b" opacity=".4" filter="url(#fridgeSoft)"/>
+                    <polygon points="0,0 280,370 280,1440 0,1680" fill="url(#fridgeLeft)"/>
+                    <polygon points="1200,0 956,370 956,1440 1200,1680" fill="url(#fridgeRight)"/>
+                    <polygon points="0,0 1200,0 956,370 280,370" fill="url(#fridgeCeil)"/>
+                    <rect x="280" y="370" width="676" height="36" fill="#eef5fa"/>
+                    <rect x="384" y="376" width="468" height="30" rx="3" fill="#dcebf5"/>
+                    <rect x="135" y="58" width="956" height="32" rx="5" fill="#20262b"/>
+                    <rect x="150" y="70" width="926" height="4" fill="#59636b"/>
+                    <ellipse cx="625" cy="226" rx="250" ry="90" fill="url(#fridgeGlow)"/>
+                    <rect x="500" y="212" width="250" height="28" rx="8" fill="#ffffff"/>
+                    <polygon points="90,515 1142,515 990,608 250,608" fill="#dcecf6" opacity=".42"/>
+                    <rect x="248" y="606" width="744" height="5" fill="#6d7a84"/>
+                    <rect x="430" y="634" width="82" height="7" rx="3" fill="#20262b"/>
+                    <rect x="725" y="634" width="82" height="7" rx="3" fill="#20262b"/>
+                    <rect x="90" y="515" width="1052" height="22" fill="url(#fridgeDrop)"/>
+                    <rect x="90" y="488" width="1052" height="28" rx="4" fill="url(#fridgeEdge)"/>
+                    <rect x="430" y="925" width="378" height="10" fill="#e8eef2"/>
+                    <rect x="90" y="925" width="1052" height="34" fill="url(#fridgeDrop)"/>
+                    <rect x="90" y="895" width="1052" height="31" rx="4" fill="url(#fridgeEdge)"/>
+                    <polygon points="205,1208 1030,1208 956,1165 280,1165" fill="#e4eef4" opacity=".6"/>
+                    <polygon points="80,1270 280,1165 280,1178 170,1300 96,1302" fill="#f4f9fc"/>
+                    <polygon points="1158,1270 956,1165 956,1178 1062,1300 1140,1302" fill="#f4f9fc"/>
+                    <rect x="205" y="1240" width="825" height="26" fill="url(#fridgeDrop)"/>
+                    <rect x="205" y="1208" width="825" height="16" rx="3" fill="url(#fridgeEdge)"/>
+                    <rect x="205" y="1224" width="825" height="16" rx="2" fill="#aeb6bb" opacity=".8"/>
+                    <polygon points="90,1640 1142,1640 1000,1435 235,1435" fill="url(#fridgeBase)"/>
+                    <rect x="90" y="1640" width="1052" height="28" rx="4" fill="url(#fridgeEdge)"/>
+                    <g><ellipse cx="118" cy="540" rx="23" ry="13" fill="#f4fafd"/><ellipse cx="118" cy="548" rx="19" ry="7" fill="#a9c9df" opacity=".55"/><ellipse cx="1114" cy="540" rx="23" ry="13" fill="#f4fafd"/><ellipse cx="1114" cy="548" rx="19" ry="7" fill="#a9c9df" opacity=".55"/><ellipse cx="118" cy="640" rx="23" ry="13" fill="#f4fafd"/><ellipse cx="118" cy="648" rx="19" ry="7" fill="#a9c9df" opacity=".55"/><ellipse cx="1114" cy="640" rx="23" ry="13" fill="#f4fafd"/><ellipse cx="1114" cy="648" rx="19" ry="7" fill="#a9c9df" opacity=".55"/><ellipse cx="118" cy="820" rx="23" ry="13" fill="#f4fafd"/><ellipse cx="118" cy="828" rx="19" ry="7" fill="#a9c9df" opacity=".55"/><ellipse cx="1114" cy="820" rx="23" ry="13" fill="#f4fafd"/><ellipse cx="1114" cy="828" rx="19" ry="7" fill="#a9c9df" opacity=".55"/><ellipse cx="118" cy="930" rx="23" ry="13" fill="#f4fafd"/><ellipse cx="118" cy="938" rx="19" ry="7" fill="#a9c9df" opacity=".55"/><ellipse cx="1114" cy="930" rx="23" ry="13" fill="#f4fafd"/><ellipse cx="1114" cy="938" rx="19" ry="7" fill="#a9c9df" opacity=".55"/></g>
+                  </svg>
+                  <img class="fridgeItem far" src="images/fridge/grape.png" alt="" style="left:37%;bottom:71.0%;height:9.5%;--tilt:-3deg;z-index:1">
+                  <img class="fridgeItem edge" src="images/fridge/tofu.png" alt="" style="left:64%;bottom:71.0%;height:8.5%;--tilt:0deg;z-index:2">
+                  <img class="fridgeItem edge" src="images/fridge/orange.png" alt="" style="left:64%;bottom:78.7%;height:5.5%;--tilt:8deg;z-index:3">
+                  <img class="fridgeItem sit" src="images/fridge/peach.png" alt="" style="left:28%;bottom:42.4%;height:24%;--tilt:0deg;z-index:3">
+                  <img class="fridgeItem far" src="images/fridge/apple.png" alt="" style="left:55%;bottom:46.7%;height:9.5%;--tilt:-3deg;z-index:1">
+                  <img class="fridgeItem edge" src="images/fridge/mushroom.png" alt="" style="left:73%;bottom:46.7%;height:19%;--tilt:3deg;z-index:2">
+                  <img class="fridgeItem edge" src="images/fridge/cucumber.png" alt="" style="left:26%;bottom:30.4%;height:15%;--tilt:9deg;z-index:2">
+                  <span class="fridgeShadow" style="left:52%;bottom:30.3%;width:11.9%;z-index:2"></span>
+                  <img class="fridgeItem lie" src="images/fridge/egg-sleep.png" alt="" style="left:52%;bottom:33.8%;height:8.5%;--tilt:86deg;z-index:2">
+                  <img class="fridgeItem sit" src="images/fridge/egg-side.png" alt="" style="left:76%;bottom:25.0%;height:17%;--tilt:0deg;z-index:3">
+                  <span class="fridgeShadow" style="left:27%;bottom:7%;width:12.7%;z-index:3"></span>
+                  <img class="fridgeItem stand" src="images/fridge/napa-cabbage.png" alt="" style="left:27%;bottom:7%;height:19.5%;--tilt:-3deg;z-index:3">
+                  <span class="fridgeShadow" style="left:67%;bottom:7.4%;width:28.1%;z-index:3"></span>
+                  <img class="fridgeItem lie" src="images/fridge/carrot.png" alt="" style="left:67%;bottom:12.5%;height:20%;--tilt:-80deg;z-index:3">
+              </div>
+              <div class="fridgeDrawer">
+                <span class="fridgeDrawerHandle" aria-hidden="true"></span>
+                <h2>남은 재료로 오늘 한 끼</h2>
+                <p>재료를 등록하면 오늘 만들 수 있는 메뉴를 찾아드릴게요.</p>
+                <button class="btn primary" type="button" onclick="go('fridgeView')">재료 등록하러 가기</button>
+              </div>
+              <div class="fridgeClosedDoor">
+                <span class="fridgeDoorSeam" aria-hidden="true"></span>
+                <span class="fridgeDoorHandle upper" aria-hidden="true"></span>
+                <span class="fridgeDoorHandle lower" aria-hidden="true"></span>
+                <p class="fridgeNote">오늘도<br>냉장고 싹.</p>
+                <button class="btn primary" type="button" onclick="openFridge()">냉장고 열기</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="homeView" class="view">
+            <div class="stats">
+              <div class="stat"><small>보유 식재료</small><b id="sCount">0</b></div>
+              <div class="stat"><small>총 잔여량</small><b id="sWeight">0g</b></div>
+              <div class="stat"><small>빨리 먹기</small><b id="sUrgent">0</b></div>
+              <div class="stat"><small>예상 소진율</small><b id="sUse">0%</b></div>
+            </div>
+
+            <div id="urgentIngredientsCard" class="card urgentIngredientsCard" hidden>
+              <div class="title">
+                <div><h3>🔥 먼저 먹어주세요</h3></div>
+              </div>
+              <div id="urgentIngredientsList" class="urgentIngredientsList"></div>
+              <button class="urgentIngredientsLink" type="button" onclick="go('fridgeView')">냉장고 전체 보기 &gt;</button>
+            </div>
+
+            <div class="card">
+              <div class="title">
+                <div><h3>🍳 오늘의 추천</h3><small>냉장고 재료 기준으로 계산했어요.</small></div>
+              </div>
+              <div id="homeRecipe"></div>
+            </div>
+
+            <div class="card" style="background:linear-gradient(135deg,#f0f8f3,#fff)">
+              <div class="title">
+                <div><h3>♻️ 요리가 끊기지 않아요</h3><small>새 메뉴 → 최소 추가구매 → 다시 만들기 순서로 추천</small></div>
+              </div>
+              <div style="font-size:13px;line-height:1.7;color:var(--muted)">
+                냉장고에 재료가 남아 있으면 가능한 메뉴를 계속 다시 계산합니다.
+                새 메뉴가 없더라도 완료했던 메뉴를 다시 추천하거나, 가장 적게 사면 되는 메뉴를 보여줘요.
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="title">
+                <div><h3>✅ 최근 완료한 요리</h3><small>완료한 메뉴는 새 메뉴 추천에서 빠지지만, 재료가 남으면 ‘다시 만들어도 돼요’에 나타납니다.</small></div>
+             </div>
+              <div id="historyList" class="history"></div>
+              <div class="historyResetActions">
+                <button class="btn soft" onclick="resetCooked()">완료기록 초기화</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="fridgeView" class="view">
+            <div class="card">
+              <div class="title fridgeTitle">
+                <div><h3>🧊 내 냉장고</h3><small>장본 재료와 남은 양을 입력하세요.<br>개수로 입력해도 레시피 g 단위로 자동 환산해요.</small></div>
+                <div class="fridgeActions">
+                  <button id="selectClearBtn" class="btn ghost" onclick="toggleSelectionMode()">선택 삭제</button>
+                  <button id="clearAllBtn" class="btn ghost clearAllBtn" onclick="clearAll()">전체 비우기</button>
+                </div>
+              </div>
+              <label class="btn primary scanBtn">
+                📷 냉장고 사진으로 등록
+                <input id="scanInput" type="file" accept="image/*" multiple hidden onchange="scanFridgePhotos(this)">
+              </label>
+              <div id="scanStatus" class="inventoryOperationStatus" role="status" aria-live="polite" hidden>
+                <span class="statusSpinner" aria-hidden="true"></span>
+                <span>사진에서 재료를 찾는 중...</span>
+              </div>
+              <div id="scanResult" class="scanResult" hidden>
+                <b>찾은 재료를 확인해주세요</b>
+                <small>사진으로 어림한 값이라 양과 소비기한이 다를 수 있어요.</small>
+                <div id="scanRows"></div>
+                <div class="scanActions">
+                  <button class="btn ghost" type="button" onclick="closeScanResult()">취소</button>
+                  <button class="btn primary" type="button" onclick="saveScanResult()">냉장고에 넣기</button>
+                </div>
+              </div>
+              <div class="inputGrid">
+                <div class="inputField nameField">
+                  <label for="nameInput">재료명</label>
+                  <input id="nameInput" placeholder="예: 양파">
+                </div>
+                <div class="inputField quantityField">
+                  <label for="qtyInput">수량</label>
+                  <input id="qtyInput" type="number" min="0" step="any" placeholder="600">
+                </div>
+                <div class="inputField unitField">
+                  <label for="unitInput">단위</label>
+                  <select id="unitInput">
+                    <option value="g">g</option>
+                    <option value="kg">kg</option>
+                    <option value="개">개</option>
+                    <option value="ml">ml</option>
+                  </select>
+                </div>
+                <div class="inputField expiryField" id="expiryField">
+                  <label for="daysInput">소비기한</label>
+                  <div class="expiryControls">
+                    <select id="daysInput">
+                      <option value="0">오늘까지</option>
+                      <option value="3">3일 이내</option>
+                      <option value="5" selected>5일 이내</option>
+                      <option value="7">7일 이내</option>
+                      <option value="14">14일 이내</option>
+                      <option value="custom">직접 설정</option>
+                    </select>
+                    <input id="expiryDateInput" type="date" aria-label="직접 소비기한 날짜" hidden>
+                  </div>
+                </div>
+                <button class="btn primary" onclick="addIngredient()">재료 추가</button>
+              </div>
+              <div id="inventoryOperationStatus" class="inventoryOperationStatus" role="status" aria-live="polite" hidden>
+                <span class="statusSpinner" aria-hidden="true"></span>
+                <span id="inventoryOperationText">냉장고 저장 중...</span>
+              </div>
+              <div id="inventorySyncNotice" class="inventorySyncNotice" role="alert" hidden>
+                <span id="inventorySyncMessage">냉장고 연결을 다시 확인해주세요.</span>
+                <button class="btn ghost" type="button" onclick="retryInventoryLoad()">다시 불러오기</button>
+              </div>
+              <div id="ingredientList" class="list"></div>
+            </div>
+
+            <div class="card">
+              <div class="title">
+                <div><h3>🧂 양념냉장고</h3><small>집에 있는 양념들을 선택해주세요.</small></div>
+              </div>
+              <div id="pantryList"></div>
+              <div class="pantryAdd">
+                <input id="pantryInput" aria-label="직접 등록할 양념 이름" maxlength="20" placeholder="목록에 없는 양념 직접 등록">
+                <button class="btn primary" type="button" onclick="addPantryItem()">등록</button>
+              </div>
+            </div>
+
+            <div class="card deductionCard">
+              <div class="title">
+                <div><h3>🧾 최근 재료 차감</h3><small>요리 완료 시 실제로 빠진 재료와 남은 잔량을 보여줘요.</small></div>
+              </div>
+              <div id="deductionList" class="history"></div>
+            </div>
+          </section>
+
+          <section id="recipeView" class="view">
+            <div class="serv recipeTabs">
+              <button type="button" data-category="general" class="on" onclick="setRecipeCategory('general')">🍳 일반</button>
+              <button type="button" data-category="diet" onclick="setRecipeCategory('diet')">🥗 다이어트</button>
+            </div>
+            <div class="card">
+              <div class="title">
+                <div><h3>🍳 추천 레시피</h3><small>현재 냉장고 재료만으로 바로 만들 수 있어요.</small></div>
+             </div>
+              <div id="recipeList" class="recipes"></div>
+            </div>
+
+            <div class="card">
+              <div class="title">
+                <div><h3>🛒 조금만 더 사면 가능</h3><small>부족한 재료가 적은 메뉴부터 보여줘요.</small></div>
+              </div>
+              <div id="nearRecipeList" class="recipes"></div>
+            </div>
+
+            <div class="card repeatCard">
+              <div class="title">
+                <div><h3>🔁 다시 만들어도 돼요</h3><small>예전에 만든 메뉴도 다시 선택할 수 있어요.</small></div>
+              </div>
+              <div id="repeatRecipeList" class="recipes"></div>
+            </div>
+          </section>
+
+          <section id="planView" class="view">
+            <div class="card">
+              <div class="title">
+                <div><h3>📅 남김없는 소진 플랜</h3><small>현재 재료로 최대 5끼를 연결합니다.</small></div>
+              </div>
+              <div id="planList" class="plan"></div>
+              <div class="progress"><div id="planBar" style="width:0%"></div></div>
+              <div id="planPercent" style="text-align:right;font-size:11px;font-weight:900;margin-top:6px">0%</div>
+            </div>
+          </section>
+        </div>
+
+        <div class="bottomNav">
+          <button class="navBtn active" data-target="homeView" onclick="go('homeView')"><span>🏠</span>홈</button>
+          <button class="navBtn" data-target="fridgeView" onclick="go('fridgeView')"><span>🧊</span>냉장고</button>
+          <button class="navBtn" data-target="recipeView" onclick="go('recipeView')"><span>🍳</span>요리</button>
+          <button class="navBtn" data-target="planView" onclick="go('planView')"><span>📅</span>식단</button>
+        </div>
+
+        <div class="toast" id="toast"></div>
+
+        <div class="modalBg" id="modalBg" onclick="if(event.target.id==='modalBg') closeModal()">
+          <div class="modal" id="modal"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/install.js"></script>
+<script src="js/supabase.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/ingredients.js"></script>
+<script src="js/pantry.js"></script>
+<script src="js/recipes.js"></script>
+<script src="js/publicRecipes.js"></script>
+<script src="js/customRecipes.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/photoScan.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

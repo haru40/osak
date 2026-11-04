@@ -1,0 +1,250 @@
+:root{
+    --bg:#eef3ed; --shell:#1d1f22; --screen:#f7f8f4; --card:#ffffff; --line:#e5e8e1;
+    --text:#182019; --muted:#7b827c; --brand:#1f7a4f; --brand2:#66b67f; --soft:#eaf6ef;
+    --warn:#fff2d7; --shadow:0 18px 50px rgba(20,35,24,.12);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;background:
+    radial-gradient(circle at 20% 10%, #dff0e5 0, transparent 24%),
+    radial-gradient(circle at 80% 0%, #fff5df 0, transparent 18%),
+    var(--bg); color:var(--text);}
+  button,input,select{font:inherit}
+  button{cursor:pointer}
+  [hidden]{display:none!important}
+  .authShell{min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
+  .authPanel{width:390px;max-width:100%;padding:26px 22px;background:var(--card);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow)}
+  .authBrand{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+  .authBrand h1{margin:0;font-size:23px}
+  .authBrand p{margin:4px 0 0;color:var(--muted);font-size:12px}
+  .authHeading h2{margin:0;font-size:24px}
+  .authHeading p{margin:7px 0 20px;color:var(--muted);font-size:13px;line-height:1.55}
+  .authForm{display:grid;gap:8px}
+  .authForm label{margin:4px 0 0 2px;color:#59615b;font-size:12px;font-weight:800}
+  .authForm input{padding:13px 14px}
+  .authMessage{min-height:20px;color:#b14d43;font-size:12px;line-height:1.5}
+  .authMessage.success{color:var(--brand)}
+  .authSubmitBtn{width:100%;padding:13px;margin-top:2px}
+  .authSubmitBtn:disabled{cursor:wait;opacity:.65}
+  .authSwitch{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:18px;color:var(--muted);font-size:12px}
+  .authSwitch button{border:0;background:none;color:var(--brand);font-weight:900;padding:4px}
+  .page{min-height:100%;display:flex;align-items:center;justify-content:center;padding:28px}
+  .wrap{display:flex;flex-direction:column;align-items:center;gap:16px}
+  .caption{font-size:13px;color:var(--muted);text-align:center;line-height:1.6}
+  .shell{
+    width:390px; max-width:100%; height:820px; background:var(--shell); border-radius:42px; padding:12px;
+    box-shadow:0 30px 90px rgba(0,0,0,.22);
+    position:relative;
+  }
+  .notch{
+    position:absolute; left:50%; transform:translateX(-50%); top:14px; width:140px; height:28px; background:#111; border-radius:0 0 18px 18px; z-index:3;
+  }
+  .screen{
+    height:100%; background:var(--screen); border-radius:32px; overflow:hidden; position:relative;
+    display:flex; flex-direction:column;
+  }
+  .content{
+    flex:1; overflow:auto; padding:18px 16px 110px;
+  }
+  .content::-webkit-scrollbar{width:0;height:0}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:22px;margin-bottom:14px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand h1{font-size:21px;margin:0}
+  .brand small{display:block;color:var(--muted);margin-top:3px}
+  .authUserBar{display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:0}
+  .authUserBar span{max-width:118px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:9px}
+  .authUserBar button{border:0;background:var(--soft);color:var(--brand);border-radius:999px;padding:6px 9px;font-size:10px;font-weight:900;white-space:nowrap}
+  .btn{border:0;border-radius:12px;padding:10px 12px;font-weight:800}
+  .btn.primary{background:var(--brand);color:#fff}
+  .btn.ghost{background:#f0f2ee;color:#58615a}
+  .clearAllBtn{flex-shrink:0;white-space:nowrap}
+  .btn.soft{background:var(--soft);color:var(--brand)}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+  .stat,.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(24,32,25,.05)}
+  .stat{padding:14px}
+  .stat small{font-size:11px;color:var(--muted);font-weight:700}
+  .stat b{display:block;font-size:24px;margin-top:6px}
+  .card{padding:16px;margin-bottom:14px}
+  .title{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+  .title h3{margin:0;font-size:17px}
+  .title small{color:var(--muted);font-size:13px}
+  .fridgeTitle{flex-direction:column;align-items:stretch}
+  .recipeEmpty{word-break:keep-all}
+  .fridgeTitle .fridgeActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+  .fridgeActions .btn{width:100%;min-width:0;white-space:nowrap}
+  .ing.selecting{grid-template-columns:auto 1fr auto}
+  .ingredientCheck{width:20px;height:20px;margin:0;accent-color:var(--brand)}
+  .empty{padding:24px 14px;text-align:center;border:1px dashed #d7dcd5;border-radius:14px;color:var(--muted);font-size:13px;line-height:1.6}
+  .inputGrid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:10px 8px;margin-bottom:12px}
+  .inputField{min-width:0}
+  .inputField label{display:block;margin:0 0 5px 2px;color:var(--muted);font-size:11px;font-weight:800}
+  .nameField{grid-column:span 7}
+  .quantityField{grid-column:span 5}
+  .unitField{grid-column:span 4}
+  .expiryField{grid-column:span 8}
+  .expiryField.customExpiry{grid-column:1/-1}
+  .expiryControls{display:flex;gap:8px;min-width:0}
+  .expiryControls select{flex:1;min-width:0}
+  .expiryControls input[type="date"]{flex:1.15;min-width:0}
+  .expiryControls [hidden]{display:none}
+  input,select{
+    width:100%; border:1px solid #dde2db; background:#fff; border-radius:12px; padding:11px 12px; outline:none;
+  }
+  input:focus,select:focus{border-color:#7cbd96; box-shadow:0 0 0 3px rgba(66,153,99,.09)}
+  .inputGrid button{grid-column:1/-1}
+  .scanBtn{display:block;width:100%;margin-bottom:12px;text-align:center;cursor:pointer}
+  .scanResult{margin-bottom:12px;padding:12px;border:1px solid var(--line);border-radius:15px;background:#fbfcf9}
+  .scanResult[hidden]{display:none}
+  .scanResult>b{display:block;font-size:14px}
+  .scanResult>small{display:block;margin:3px 0 10px;color:var(--muted);font-size:11px}
+  .scanRow{display:grid;grid-template-columns:20px minmax(0,.9fr) minmax(0,.8fr) minmax(0,1.3fr);gap:6px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+  .scanName{grid-column:2/-1}
+  .scanRow .scanTag{grid-column:2/-1;justify-self:start}
+  .scanQty{grid-column:2}
+  .scanRow input:not(.ingredientCheck),.scanRow select{min-width:0;width:100%;padding:8px 6px;font-size:12px}
+  .scanActions{display:grid;grid-template-columns:1fr 2fr;gap:8px;margin-top:8px}
+  .inventoryOperationStatus{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 12px;padding:10px 12px;border-radius:12px;background:var(--soft);color:var(--brand);font-size:12px;font-weight:800}
+  .statusSpinner{width:14px;height:14px;border:2px solid rgba(31,122,79,.2);border-top-color:var(--brand);border-radius:50%;animation:statusSpin .7s linear infinite}
+  .inventorySyncNotice{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px;padding:10px 12px;border:1px solid #efd39b;border-radius:12px;background:var(--warn);color:#825c18;font-size:11px;line-height:1.45}
+  .inventorySyncNotice .btn{flex-shrink:0;padding:7px 9px;font-size:10px}
+  @keyframes statusSpin{to{transform:rotate(360deg)}}
+  .list,.recipes,.plan,.history{display:grid;gap:9px}
+  .historyResetActions{display:flex;justify-content:center;margin-top:12px}
+  .ing,.recipe,.historyItem{
+    border:1px solid var(--line); border-radius:15px; padding:12px; background:#fbfcf9;
+  }
+  .ing{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center}
+  .ing small,.recipe small,.historyItem small{color:var(--muted)}
+  .ingredientMeta{display:grid;gap:3px;margin-top:5px;line-height:1.45}
+  .ingredientMeta b{color:var(--brand)}
+  .badge{font-size:10px;font-weight:900;background:var(--soft);color:var(--brand);padding:5px 7px;border-radius:999px}
+  .ing .badge{font-size:11px;padding:6px 9px}
+  .badge.warn{background:var(--warn);color:#936313}
+  .ingredientBadges{display:flex;flex-direction:column;align-items:center;gap:4px}
+  .badge.urgent{background:#fff0dc;color:#a75a16}
+  .badge.expired{background:#fde8e6;color:#b34840}
+  .urgentIngredientsCard[hidden]{display:none}
+  .urgentIngredientsList{display:grid;gap:0}
+  .urgentIngredientItem{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px dashed #d9ded7}
+  .urgentIngredientItem:first-child{padding-top:2px}
+  .urgentIngredientItem:last-child{border-bottom:0}
+  .urgentIngredientItem > div{display:grid;gap:4px}
+  .urgentIngredientItem small{color:var(--muted);font-size:12px}
+  .urgentDay{flex-shrink:0;border-radius:999px;padding:6px 9px;background:#fff0dc;color:#a75a16;font-size:11px;font-weight:900}
+  .urgentDay.expired{background:#fde8e6;color:#b34840}
+  .urgentIngredientsLink{display:block;margin:10px 0 0 auto;padding:4px 0;border:0;background:none;color:var(--brand);font-size:12px;font-weight:900}
+  .iconBtn{border:0;background:none;color:#999;font-size:18px}
+  .recipeTop{display:flex;justify-content:space-between;gap:10px}
+  .recipe h4{margin:0 0 4px;font-size:16px}
+  .score{font-size:22px;font-weight:900;color:var(--brand)}
+  .score small{display:block;font-size:9px;text-align:right}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}
+  .chip{font-size:10px;background:#f1f3ef;color:#576058;padding:6px 8px;border-radius:999px;font-weight:800}
+  .actions{display:grid;grid-template-columns:minmax(0,1fr);gap:7px}
+  .actions .btn{width:100%;min-width:0;height:40px;padding:8px 7px;white-space:nowrap;font-size:12px}
+  .link{border:0;background:none;color:var(--brand);font-weight:800;padding:0}
+  .planItem{display:grid;grid-template-columns:48px 1fr auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+  .planItem:last-child{border-bottom:0}
+  .day{font-size:10px;font-weight:900;color:#6e766f}
+  .progress{height:9px;background:#edf0ea;border-radius:999px;overflow:hidden;margin-top:12px}
+  .progress > div{height:100%;background:linear-gradient(90deg,var(--brand),#7ec494)}
+  .bottomNav{
+    position:absolute; left:0; right:0; bottom:0; height:88px; background:rgba(255,255,255,.95); backdrop-filter:blur(18px);
+    border-top:1px solid var(--line); display:grid; grid-template-columns:repeat(4,1fr); padding-bottom:18px;
+  }
+  .navBtn{border:0;background:transparent;color:#7a837c;font-size:11px;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+  .navBtn span{font-size:20px}
+  .navBtn.active{color:var(--brand)}
+  .screen.landing .bottomNav{display:none}
+  .screen.landing .topbar{position:relative;z-index:6}
+  .screen.landing .brand small{display:none}
+  .fridgeScene{position:absolute;inset:0;perspective:900px;display:flex;flex-direction:column;overflow:hidden;background:#e4eef4}
+  .fridgeScene::after{content:"";position:absolute;inset:0;z-index:7;pointer-events:none;box-shadow:inset 0 0 0 4px #fff}
+  .fridgeStage{position:relative;flex:1;min-height:0;overflow:hidden}
+  .fridgeWalls{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .fridgeItem{position:absolute;display:block;width:auto;transform:translateX(-50%) rotate(var(--tilt));transform-origin:50% 100%;filter:drop-shadow(0 3px 3px rgba(40,56,64,.24))}
+  .fridgeItem.far{filter:brightness(.94) saturate(.82) blur(.3px)}
+  .fridgeItem.lie{transform:translate(-50%,50%) rotate(var(--tilt));transform-origin:50% 50%}
+  .fridgeItem.sit{clip-path:inset(0 -20% 18% -20%);filter:none}
+  .fridgeShadow{position:absolute;height:1.8%;transform:translate(-50%,50%);border-radius:50%;background:radial-gradient(closest-side,rgba(40,56,64,.42),rgba(40,56,64,0))}
+  .fridgeDrawer{position:relative;z-index:5;flex:none;margin:0 12px 14px;padding:20px 18px 16px;text-align:center;background:linear-gradient(180deg,#d8e2e8 0%,#f2f6f8 26%);border:1px solid #fff;border-top:0;border-radius:0 0 18px 18px;box-shadow:0 -3px 8px rgba(40,56,64,.18)}
+  .fridgeDrawerHandle{position:absolute;left:50%;top:7px;width:64px;height:5px;margin-left:-32px;border-radius:999px;background:#b3c2c9}
+  .fridgeDrawer h2{margin:0 0 5px;font-size:23px;line-height:1.25;color:var(--text)}
+  .fridgeDrawer p{margin:0 0 12px;font-size:13px;line-height:1.5;color:#566064;word-break:keep-all}
+  .fridgeDrawer .btn{width:100%;padding:14px 12px;border-radius:999px;font-size:15px}
+  .fridgeClosedDoor{position:absolute;inset:0;z-index:8;background:linear-gradient(104deg,#dfe4e7 0%,#f6f8f9 34%,#e4e8eb 58%,#f3f5f6 78%,#d6dce0 100%);box-shadow:inset 0 0 0 4px #fff,inset -10px 0 22px rgba(40,56,64,.1);transform-origin:left center;transition:transform .85s cubic-bezier(.45,.05,.3,1),opacity .25s linear .6s,visibility 0s linear .85s}
+  .fridgeScene.open .fridgeClosedDoor{transform:rotateY(-104deg);opacity:0;visibility:hidden;pointer-events:none}
+  .fridgeDoorSeam{position:absolute;left:0;right:0;top:27%;height:6px;background:linear-gradient(180deg,#8f9aa1,#c8d0d4 45%,#ffffff)}
+  .fridgeDoorHandle{position:absolute;right:20px;width:10px;border-radius:999px;background:linear-gradient(90deg,#aeb7bd,#f5f7f8 45%,#8e999f);box-shadow:-3px 3px 6px rgba(40,56,64,.24)}
+  .fridgeDoorHandle.upper{top:15%;height:9%}
+  .fridgeDoorHandle.lower{top:31%;height:27%}
+  .fridgeNote{position:absolute;left:34px;top:37%;margin:0;padding:18px 16px;background:#ffe98f;box-shadow:0 5px 10px rgba(40,56,64,.2);transform:rotate(-3deg);font-size:15px;font-weight:800;line-height:1.45;color:#4a4326}
+  .fridgeNote::before{content:"";position:absolute;left:50%;top:-8px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:#e4574a;box-shadow:0 2px 3px rgba(40,56,64,.35)}
+  .fridgeClosedDoor .btn{position:absolute;left:32px;right:32px;bottom:44px;padding:15px 12px;border-radius:999px;background:#cf4433;font-size:16px}
+  @media (prefers-reduced-motion:reduce){.fridgeClosedDoor{transition:none}}
+  .view{display:none}
+  .view.active{display:block}
+  .toast{
+    position:absolute; left:50%; bottom:100px; transform:translateX(-50%); background:#17231b; color:#fff;
+    padding:11px 14px; border-radius:999px; font-size:12px; font-weight:800; opacity:0; transition:.2s; z-index:30; white-space:nowrap;
+  }
+  .toast.show{opacity:1}
+  .modalBg{
+    position:absolute; inset:0; background:rgba(12,18,14,.56); display:none; align-items:flex-end; justify-content:center; z-index:40;
+  }
+  .modalBg.show{display:flex}
+  .modal{
+    width:100%; max-height:90%; overflow:auto; background:#fff; border-radius:26px 26px 0 0; padding:20px 18px 24px;
+  }
+  .modal::-webkit-scrollbar{width:0;height:0}
+  .mhead{display:flex;justify-content:space-between;gap:10px}
+  .mhead h3{margin:0;font-size:24px}
+  .close{width:36px;height:36px;border:0;background:#f0f2ee;border-radius:50%;font-size:18px}
+  .serv{display:flex;gap:7px;margin:15px 0}
+  .serv button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;font-weight:800}
+  .serv button.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .recipeTabs{margin:0 0 12px}
+  .pantryTabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+  .pantryTab{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;border:1px solid var(--line);background:#fff;border-radius:14px;padding:9px 2px 8px;color:#576058}
+  .pantryTab.on{border-color:var(--brand);background:var(--soft);color:var(--brand)}
+  .pantryTabIcon{font-size:24px;line-height:1.2}
+  .pantryTab b{font-size:11px;white-space:nowrap}
+  .pantryTab small{font-size:10px;color:var(--muted)}
+  .pantryOptions{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+  .pantryAdd{display:flex;gap:8px;margin-top:12px}
+  .pantryAdd input{flex:1;min-width:0}
+  .pantryAdd .btn{flex:none}
+  .pantryOption{border:1px solid var(--line);background:#fff;color:#576058;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:800}
+  .pantryOption.on{background:var(--brand);border-color:var(--brand);color:#fff}
+  .recipeTabs button{flex:1}
+  .box{background:#f8faf7;border:1px solid var(--line);border-radius:15px;padding:13px;margin-bottom:10px}
+  .box h4{margin:0 0 10px}
+  .row{display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:6px 0;border-bottom:1px dashed #d9ded7}
+  .row:last-child{border-bottom:0}
+  .steps{display:grid;gap:9px}
+  .step{display:grid;grid-template-columns:26px 1fr;gap:8px;font-size:13px;line-height:1.5}
+  .num{width:26px;height:26px;border-radius:50%;background:var(--soft);color:var(--brand);display:grid;place-items:center;font-weight:900}
+  .miss{background:var(--warn);padding:9px 10px;border-radius:10px;font-size:11px;color:#8e6317;line-height:1.5}
+  .modalFooter{display:flex;flex-direction:column;gap:9px;margin-top:12px}
+  .webref{font-size:11px;line-height:1.55;color:var(--muted);background:#f6f8f5;border-radius:12px;padding:10px 12px}
+  .recipeImage{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;border-radius:14px;border:1px solid var(--line);margin-bottom:12px;background:#f1f3ef}
+  .recipeImage.clickable{cursor:pointer}
+  .modalRecipeImage{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;border-radius:18px;border:1px solid var(--line);margin:12px 0 8px;background:#f1f3ef}
+  .platingHint{font-size:10px;color:var(--muted);line-height:1.5;margin:0 0 12px}
+  @media (max-width:340px){
+    .nameField,.quantityField,.unitField,.expiryField{grid-column:1/-1}
+  }
+  .installBanner{position:fixed;left:12px;right:12px;top:calc(10px + env(safe-area-inset-top));z-index:50;max-width:366px;margin:0 auto;padding:9px 10px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 22px rgba(24,32,25,.16)}
+  .installBanner[hidden]{display:none}
+  .installRow{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800}
+  .installRow span{flex:1;min-width:0}
+  .installRow .btn{flex:none;padding:7px 13px;border-radius:999px;font-size:12px}
+  .installClose{flex:none;border:0;background:none;color:var(--muted);font-size:20px;line-height:1;padding:2px 4px}
+  .installBanner p{margin:7px 2px 2px;color:var(--muted);font-size:12px;line-height:1.5}
+  @media (max-width:520px){
+    .page{padding:0}
+    .wrap{width:100%}
+    .shell{width:100%;height:100vh;height:100dvh;max-width:none;border-radius:0;padding:0}
+    .notch{display:none}
+    .screen{border-radius:0}
+    .caption{display:none}
+  }
