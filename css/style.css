@@ -15,6 +15,7 @@
   .authPanel{width:390px;max-width:100%;padding:26px 22px;background:var(--card);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow)}
   .authBrand{display:flex;align-items:center;gap:12px;margin-bottom:28px}
   .authBrand h1{margin:0;font-size:23px}
+  .authBrand .brandLogo{height:30px}
   .authBrand p{margin:4px 0 0;color:var(--muted);font-size:12px}
   .authHeading h2{margin:0;font-size:24px}
   .authHeading p{margin:7px 0 20px;color:var(--muted);font-size:13px;line-height:1.55}
@@ -49,6 +50,7 @@
   .topbar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:22px;margin-bottom:14px}
   .brand{display:flex;align-items:center;gap:10px}
   .brand h1{font-size:21px;margin:0}
+  .brandLogo{display:block;width:auto;height:22px}
   .brand small{display:block;color:var(--muted);margin-top:3px}
   .authUserBar{display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:0}
   .authUserBar span{max-width:118px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:9px}
