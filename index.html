@@ -329,7 +329,8 @@
 
         <div id="cameraScreen" class="cameraScreen" hidden>
           <video id="cameraVideo" autoplay muted playsinline></video>
-          <div class="cameraGuide" aria-hidden="true"></div>
+          <canvas id="cameraBoxes" aria-hidden="true"></canvas>
+          <div class="cameraGuide"><span id="cameraGuideName"></span></div>
           <div class="cameraTop">
             <span id="cameraCount"></span>
             <button class="btn soft" type="button" onclick="closeCamera()">완료</button>

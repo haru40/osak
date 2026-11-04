@@ -1,6 +1,6 @@
 // 앱 파일을 저장해 두고, 인터넷이 되면 항상 새 파일을 먼저 받는다.
-// 파일 목록을 바꾸면 VERSION을 올린다.
-const VERSION = "v2";
+// 파일 목록을 바꾸거나 설치된 앱에 바로 반영해야 하면 VERSION을 올린다.
+const VERSION = "v3";
 const CACHE_NAME = `osak-${VERSION}`;
 const APP_FILES = [
   "./",
@@ -35,7 +35,7 @@ const APP_FILES = [
 ];
 
 self.addEventListener("install",event=>{
-  event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_FILES)));
+  event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_FILES.map(file=>new Request(file,{cache:"reload"})))));
   self.skipWaiting();
 });
 
@@ -50,7 +50,8 @@ self.addEventListener("activate",event=>{
 async function networkFirst(request){
   const cache = await caches.open(CACHE_NAME);
   try{
-    const response = await fetch(request);
+    // 브라우저의 HTTP 캐시를 거치면 올린 파일이 몇 분 늦게 보인다.
+    const response = await fetch(request.url,{cache:"no-cache"});
     if(response.ok) await cache.put(request,response.clone());
     return response;
   }catch(error){
