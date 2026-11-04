@@ -32,6 +32,7 @@
   .socialBtn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:12px;background:#fff;border:1px solid #d7dcd5;border-radius:14px;color:var(--text);font-size:14px;font-weight:800}
   .socialBtn svg{width:18px;height:18px}
   .socialBtn:disabled{opacity:.6}
+  .kakaoBtn{background:#fee500;border-color:#fee500;color:#191919}
   .authSwitch{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:18px;color:var(--muted);font-size:12px}
   .authSwitch button{border:0;background:none;color:var(--brand);font-weight:900;padding:4px}
   .page{min-height:100%;display:flex;align-items:center;justify-content:center;padding:28px}

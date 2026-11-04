@@ -16,6 +16,7 @@ const AuthController = (() => {
   const forgotButton = document.getElementById("authForgotBtn");
   const socialSection = document.getElementById("authSocial");
   const googleButton = document.getElementById("authGoogleBtn");
+  const kakaoButton = document.getElementById("authKakaoBtn");
   const confirmInput = document.getElementById("authPasswordConfirm");
   const confirmLabel = document.querySelector('label[for="authPasswordConfirm"]');
   const passwordLabel = document.querySelector('label[for="authPassword"]');
@@ -256,7 +257,8 @@ const AuthController = (() => {
     button.disabled = true;
     const {error} = await supabaseClient.auth.signInWithOAuth({
       provider,
-      options:{redirectTo:window.location.origin + window.location.pathname}
+      // 이미 로그인돼 있어도 계정을 직접 고르게 한다.
+      options:{redirectTo:window.location.origin + window.location.pathname,queryParams:{prompt:"select_account"}}
     });
     if(error){
       console.error("[Auth] 소셜 로그인 실패",error);
@@ -267,6 +269,7 @@ const AuthController = (() => {
 
   form.addEventListener("submit",handleSubmit);
   googleButton.addEventListener("click",()=>signInWithProvider("google",googleButton));
+  kakaoButton.addEventListener("click",()=>signInWithProvider("kakao",kakaoButton));
   switchButton.addEventListener("click",()=>setMode(mode==="login" ? "signup" : "login"));
   forgotButton.addEventListener("click",()=>{setMode("forgot"); emailInput.focus();});
   logoutButton.addEventListener("click",handleLogout);
