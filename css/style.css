@@ -107,8 +107,6 @@
   .cameraAmounts{display:grid;grid-template-columns:36px minmax(0,1fr) 36px minmax(0,.8fr) minmax(0,1.4fr);gap:5px}
   .cameraAmounts .btn{padding:6px 0;font-size:18px}
   .cameraAmounts input,.cameraAmounts select{padding:8px 5px;font-size:12px;text-align:center}
-  .cameraCard:not([hidden])+.cameraShot{display:none}
-  .cameraShot{width:100%;padding:14px 12px;border-radius:999px;font-size:15px}
   .scanResult{margin-bottom:12px;padding:12px;border:1px solid var(--line);border-radius:15px;background:#fbfcf9}
   .scanResult[hidden]{display:none}
   .scanResult>b{display:block;font-size:14px}

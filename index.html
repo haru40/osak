@@ -336,7 +336,7 @@
           </div>
           <p id="cameraStatus" class="cameraStatus" role="status" aria-live="polite"></p>
           <div class="cameraBottom">
-            <div id="cameraCard" class="cameraCard" hidden>
+            <div id="cameraCard" class="cameraCard" hidden onpointerdown="holdCameraCard()" onfocusin="holdCameraCard()">
               <input id="cameraName" aria-label="재료명">
               <span id="cameraTag" class="badge" hidden>양념냉장고로</span>
               <div id="cameraAmounts" class="cameraAmounts">
@@ -361,7 +361,6 @@
                 <button class="btn primary" type="button" onclick="registerCameraItem()">등록</button>
               </div>
             </div>
-            <button class="btn primary cameraShot" type="button" onclick="scanCameraFrame()">지금 인식</button>
           </div>
         </div>
         <div class="bottomNav">

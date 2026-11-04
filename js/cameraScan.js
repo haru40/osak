@@ -1,10 +1,12 @@
-// 카메라를 비추다가 화면이 멈추면 가운데 물건 하나를 인식해 카드로 보여준다.
-// 화면 변화는 폰에서 계산하므로, 멈춘 장면이 바뀌었을 때만 크레딧이 나간다.
+// 카메라에 비친 가운데 물건을 버튼 없이 인식해 카드로 보여준다.
+// 화면 변화는 폰에서 계산하므로, 장면이 바뀌었을 때만 크레딧이 나간다.
 const CAMERA_TICK_MS = 350;
-const CAMERA_STILL_TICKS = 3;
+const CAMERA_STILL_TICKS = 2;
 const CAMERA_FRAME_SIZE = 32;
-const CAMERA_STILL_DIFF = 6;
-const CAMERA_CHANGED_DIFF = 12;
+const CAMERA_STILL_DIFF = 10;
+const CAMERA_CHANGED_DIFF = 14;
+// 손이 계속 흔들려 멈춘 순간이 없어도 이 시간이 지나면 인식한다.
+const CAMERA_FORCE_MS = 2500;
 const CAMERA_DARK_LEVEL = 25;
 const CAMERA_CROP_RATIO = 0.75;
 const CAMERA_SEND_SIDE = 640;
@@ -26,7 +28,7 @@ function showCameraNotice(text){
   setCameraStatus(text);
 }
 function setCameraHint(text){
-  if(Date.now()>=camera.noticeUntil) setCameraStatus(text);
+  if(!camera.item && Date.now()>=camera.noticeUntil) setCameraStatus(text);
 }
 function readCameraFrame(video,canvas){
   const context = canvas.getContext("2d",{willReadFrequently:true});
@@ -56,7 +58,7 @@ function cropCameraPhoto(video){
   return canvas.toDataURL("image/jpeg",CAMERA_JPEG_QUALITY);
 }
 function cameraIsWaiting(){
-  return camera && !camera.busy && !camera.item;
+  return camera && !camera.busy && !camera.editing;
 }
 function cameraTick(){
   if(!cameraIsWaiting() || cameraEl("cameraVideo").readyState<2) return;
@@ -70,12 +72,15 @@ function cameraTick(){
   }
   const still = previous && frameDiff(frame,previous)<CAMERA_STILL_DIFF;
   camera.stillTicks = still ? camera.stillTicks+1 : 0;
-  if(camera.stillTicks<CAMERA_STILL_TICKS){
-    setCameraHint("재료를 네모 칸에 맞춰주세요");
+  const sameScene = camera.sentFrame && frameDiff(frame,camera.sentFrame)<CAMERA_CHANGED_DIFF;
+  if(sameScene){
+    camera.changedAt = 0;
     return;
   }
-  const sameScene = camera.sentFrame && frameDiff(frame,camera.sentFrame)<CAMERA_CHANGED_DIFF;
-  if(!sameScene) scanCameraFrame();
+  camera.changedAt = camera.changedAt || Date.now();
+  const waitedLong = Date.now()-camera.changedAt>=CAMERA_FORCE_MS;
+  if(camera.stillTicks>=CAMERA_STILL_TICKS || waitedLong) scanCameraFrame();
+  else setCameraHint("재료를 네모 칸에 맞춰주세요");
 }
 async function scanCameraFrame(){
   if(!cameraIsWaiting()) return;
@@ -87,12 +92,18 @@ async function scanCameraFrame(){
   session.busy = true;
   session.scans += 1;
   session.sentFrame = session.frame;
-  setCameraStatus("무엇인지 보는 중...");
+  session.changedAt = 0;
+  setCameraHint("무엇인지 보는 중...");
   try{
     const items = await requestScan([cropCameraPhoto(cameraEl("cameraVideo"))],"single");
-    if(session!==camera) return;
-    if(items.length) showCameraCard(items[0]);
-    else showCameraNotice("식재료를 찾지 못했어요. 더 가까이 비춰주세요");
+    // 인식하는 사이 카드를 고치기 시작했다면 덮어쓰지 않는다.
+    if(session!==camera || session.editing) return;
+    if(items.length){
+      showCameraCard(items[0]);
+    }else{
+      closeCameraCard();
+      showCameraNotice("식재료를 찾지 못했어요. 더 가까이 비춰주세요");
+    }
   }catch(error){
     console.error("[cameraScan]",error);
     if(session===camera) showCameraNotice("인식하지 못했어요. 다시 비춰주세요");
@@ -100,6 +111,9 @@ async function scanCameraFrame(){
     session.busy = false;
     session.stillTicks = 0;
   }
+}
+function holdCameraCard(){
+  if(camera) camera.editing = true;
 }
 function showCameraCard(item){
   camera.item = item;
@@ -111,7 +125,7 @@ function showCameraCard(item){
   cameraEl("cameraUnit").value = item.unit;
   cameraEl("cameraDays").value = item.days;
   cameraEl("cameraCard").hidden = false;
-  setCameraStatus("맞는지 확인해주세요");
+  setCameraStatus("맞으면 등록을 눌러주세요");
 }
 function changeCameraQty(step){
   const input = cameraEl("cameraQty");
@@ -119,6 +133,7 @@ function changeCameraQty(step){
 }
 function closeCameraCard(){
   camera.item = null;
+  camera.editing = false;
   camera.stillTicks = 0;
   cameraEl("cameraCard").hidden = true;
   setCameraStatus("재료를 네모 칸에 맞춰주세요");
@@ -150,7 +165,7 @@ async function openCamera(){
     });
     const canvas = document.createElement("canvas");
     canvas.width = canvas.height = CAMERA_FRAME_SIZE;
-    camera = {stream,canvas,frame:null,sentFrame:null,stillTicks:0,busy:false,item:null,scans:0,saved:0,timer:null,noticeUntil:0};
+    camera = {stream,canvas,frame:null,sentFrame:null,stillTicks:0,busy:false,item:null,editing:false,changedAt:0,scans:0,saved:0,timer:null,noticeUntil:0};
     cameraEl("cameraScreen").hidden = false;
     cameraEl("cameraCount").textContent = "";
     setCameraStatus("재료를 네모 칸에 맞춰주세요");
