@@ -91,7 +91,24 @@
   }
   input:focus,select:focus{border-color:#7cbd96; box-shadow:0 0 0 3px rgba(66,153,99,.09)}
   .inputGrid button{grid-column:1/-1}
-  .scanBtn{display:block;width:100%;margin-bottom:12px;text-align:center;cursor:pointer}
+  .scanStart{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+  .scanBtn{display:block;text-align:center;cursor:pointer}
+  .cameraScreen{position:absolute;inset:0;z-index:30;overflow:hidden;background:#000}
+  .cameraScreen[hidden],.cameraCard[hidden],.cameraAmounts[hidden],.cameraCard .badge[hidden]{display:none}
+  .cameraScreen video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .cameraGuide{position:absolute;left:50%;top:44%;width:72%;aspect-ratio:1;transform:translate(-50%,-50%);border:3px solid #fff;border-radius:22px;box-shadow:0 0 0 999px rgba(0,0,0,.34)}
+  .cameraTop{position:absolute;left:14px;right:14px;top:calc(34px + env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:14px;font-weight:800}
+  .cameraTop .btn{padding:8px 16px;border-radius:999px;font-size:13px}
+  .cameraStatus{position:absolute;left:16px;right:16px;top:12%;margin:0;color:#fff;font-size:14px;font-weight:800;text-align:center;text-shadow:0 1px 4px rgba(0,0,0,.7)}
+  .cameraBottom{position:absolute;left:12px;right:12px;bottom:calc(16px + env(safe-area-inset-bottom));display:grid;gap:8px}
+  .cameraCard{display:grid;gap:8px;padding:12px;background:#fff;border-radius:18px}
+  .cameraCard .badge{justify-self:start}
+  .cameraCard input,.cameraCard select{min-width:0;width:100%}
+  .cameraAmounts{display:grid;grid-template-columns:36px minmax(0,1fr) 36px minmax(0,.8fr) minmax(0,1.4fr);gap:5px}
+  .cameraAmounts .btn{padding:6px 0;font-size:18px}
+  .cameraAmounts input,.cameraAmounts select{padding:8px 5px;font-size:12px;text-align:center}
+  .cameraCard:not([hidden])+.cameraShot{display:none}
+  .cameraShot{width:100%;padding:14px 12px;border-radius:999px;font-size:15px}
   .scanResult{margin-bottom:12px;padding:12px;border:1px solid var(--line);border-radius:15px;background:#fbfcf9}
   .scanResult[hidden]{display:none}
   .scanResult>b{display:block;font-size:14px}

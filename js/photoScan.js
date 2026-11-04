@@ -25,6 +25,20 @@ function setScanBusy(busy){
   document.getElementById("scanStatus").hidden = !busy;
   document.getElementById("scanInput").disabled = busy;
 }
+// 로그인 토큰과 함께 사진을 보내 찾은 재료 목록을 받는다.
+async function requestScan(images,mode){
+  const {data} = await supabaseClient.auth.getSession();
+  const token = data.session?.access_token;
+  if(!token) throw new Error("no session");
+  const response = await fetch(PHOTO_SCAN_URL,{
+    method:"POST",
+    headers:{"Content-Type":"application/json",Authorization:`Bearer ${token}`},
+    body:JSON.stringify({images,mode})
+  });
+  if(!response.ok) throw new Error(`scan failed: ${response.status}`);
+  const {items} = await response.json();
+  return items || [];
+}
 async function scanFridgePhotos(input){
   const files = [...input.files];
   input.value = "";
@@ -34,19 +48,9 @@ async function scanFridgePhotos(input){
 
   setScanBusy(true);
   try{
-    const {data} = await supabaseClient.auth.getSession();
-    const token = data.session?.access_token;
-    if(!token){ toast("로그인 정보를 확인 중이에요. 새로고침 후 다시 시도해주세요."); return; }
-
     const images = await Promise.all(files.slice(0,SCAN_MAX_PHOTOS).map(shrinkPhoto));
-    const response = await fetch(PHOTO_SCAN_URL,{
-      method:"POST",
-      headers:{"Content-Type":"application/json",Authorization:`Bearer ${token}`},
-      body:JSON.stringify({images})
-    });
-    if(!response.ok) throw new Error(`scan failed: ${response.status}`);
-    const {items} = await response.json();
-    if(!items?.length){ toast("사진에서 식재료를 찾지 못했어요."); return; }
+    const items = await requestScan(images,"fridge");
+    if(!items.length){ toast("사진에서 식재료를 찾지 못했어요."); return; }
     renderScanResult(items);
   }catch(error){
     console.error("[photoScan]",error);
@@ -125,8 +129,13 @@ async function saveScanResult(){
     toast("재료명과 양을 확인해주세요.");
     return;
   }
-  if(!inventoryUser) return;
-
+  if(!await storeScanRows(rows)) return;
+  closeScanResult();
+  toast(`${rows.length}개를 넣었어요.`);
+}
+// 재료는 냉장고에, 양념은 양념냉장고에 넣는다.
+async function storeScanRows(rows){
+  if(!inventoryUser) return false;
   const saved = await runInventoryOperation("재료 저장 중...",async()=>{
     for(const row of rows.filter(item=>item.kind==="ingredient")){
       const expiryDate = addDaysToDateValue(todayDateValue(),row.days);
@@ -134,11 +143,10 @@ async function saveScanResult(){
     }
     render();
   });
-  if(!saved) return;
+  if(!saved) return false;
   for(const row of rows.filter(item=>item.kind==="seasoning")){
     const name = pantryCanonicalName(row.name);
     if(!pantryItems.some(item=>item.name===name)) await togglePantryItem(name);
   }
-  closeScanResult();
-  toast(`${rows.length}개를 넣었어요.`);
+  return true;
 }
