@@ -14,6 +14,8 @@ const AuthController = (() => {
   const logoutButton = document.getElementById("logoutBtn");
 
   const forgotButton = document.getElementById("authForgotBtn");
+  const socialSection = document.getElementById("authSocial");
+  const googleButton = document.getElementById("authGoogleBtn");
   const confirmInput = document.getElementById("authPasswordConfirm");
   const confirmLabel = document.querySelector('label[for="authPasswordConfirm"]');
   const passwordLabel = document.querySelector('label[for="authPassword"]');
@@ -46,6 +48,7 @@ const AuthController = (() => {
     confirmInput.hidden = confirmLabel.hidden = !isReset;
     confirmInput.value = "";
     forgotButton.hidden = mode!=="login";
+    socialSection.hidden = isForgot || isReset;
     switchButton.parentElement.hidden = isReset;
     if(isForgot || isReset){
       title.textContent = isReset ? "새 비밀번호 설정" : "비밀번호 찾기";
@@ -248,7 +251,22 @@ const AuthController = (() => {
     else showAuth();
   }
 
+  async function signInWithProvider(provider,button){
+    setMessage();
+    button.disabled = true;
+    const {error} = await supabaseClient.auth.signInWithOAuth({
+      provider,
+      options:{redirectTo:window.location.origin + window.location.pathname}
+    });
+    if(error){
+      console.error("[Auth] 소셜 로그인 실패",error);
+      button.disabled = false;
+      setMessage("로그인을 시작하지 못했습니다. 잠시 후 다시 시도해주세요.");
+    }
+  }
+
   form.addEventListener("submit",handleSubmit);
+  googleButton.addEventListener("click",()=>signInWithProvider("google",googleButton));
   switchButton.addEventListener("click",()=>setMode(mode==="login" ? "signup" : "login"));
   forgotButton.addEventListener("click",()=>{setMode("forgot"); emailInput.focus();});
   logoutButton.addEventListener("click",handleLogout);
