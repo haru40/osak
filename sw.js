@@ -1,6 +1,6 @@
 // 앱 파일을 저장해 두고, 인터넷이 되면 항상 새 파일을 먼저 받는다.
 // 파일 목록을 바꾸거나 설치된 앱에 바로 반영해야 하면 VERSION을 올린다.
-const VERSION = "v7";
+const VERSION = "v8";
 const CACHE_NAME = `osak-${VERSION}`;
 const APP_FILES = [
   "./",
