@@ -686,7 +686,12 @@ async function loadSavedRecipes(){
   }
 }
 function recipeImageSrc(r){
-  return RECIPE_IMAGES[r.id] || r.image || "";
+  return RECIPE_PHOTOS[r.id]?.src || RECIPE_IMAGES[r.id] || r.image || "";
+}
+function recipePhotoCredit(r){
+  const photo = RECIPE_PHOTOS[r.id];
+  if(!photo) return "";
+  return `<a class="photoCredit" href="${photo.page}" target="_blank" rel="noreferrer">사진: ${escapeHtml(photo.credit)} · ${photo.license} · 크기 조정</a>`;
 }
 function recipeKcal(r){
   return r.nutrition?.kcal ?? null;
@@ -1036,6 +1041,7 @@ function renderModal(){
       ${[1,2,3].map(n=>`<button class="${currentServings===n?'on':''}" onclick="setServings(${n})">${n}인분</button>`).join('')}
     </div>
     ${recipeImageSrc(r) ? `<img class="modalRecipeImage" src="${recipeImageSrc(r)}" alt="${r.name} 완성 및 플레이팅 참고 이미지">
+    ${recipePhotoCredit(r)}
     <div class="platingHint">📸 완성 이미지의 담음새와 고명 배치를 플레이팅 참고용으로 활용해보세요.</div>` : ""}
     ${r.nutrition ? `<div class="box">
       <h4>🔥 영양정보 (1인분${r.nutrition.estimated ? ", 추정" : ""})</h4>

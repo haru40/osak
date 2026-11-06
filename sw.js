@@ -1,6 +1,6 @@
 // 앱 파일을 저장해 두고, 인터넷이 되면 항상 새 파일을 먼저 받는다.
 // 파일 목록을 바꾸거나 설치된 앱에 바로 반영해야 하면 VERSION을 올린다.
-const VERSION = "v6";
+const VERSION = "v7";
 const CACHE_NAME = `osak-${VERSION}`;
 const APP_FILES = [
   "./",
@@ -12,6 +12,7 @@ const APP_FILES = [
   "js/ingredients.js",
   "js/pantry.js",
   "js/recipes.js",
+  "js/recipePhotos.js",
   "js/publicRecipes.js",
   "js/customRecipes.js",
   "js/storage.js",
@@ -20,6 +21,13 @@ const APP_FILES = [
   "js/install.js",
   "js/app.js",
   "images/ossak-logo.png",
+  "images/recipes/fried.jpg",
+  "images/recipes/gamjajeon.jpg",
+  "images/recipes/jeyuk.jpg",
+  "images/recipes/kimchirice.jpg",
+  "images/recipes/kimchistew.jpg",
+  "images/recipes/tofu.jpg",
+  "images/recipes/tofukimchi.jpg",
   "images/icons/icon-192.png",
   "images/icons/icon-512.png",
   "images/fridge/apple.png",

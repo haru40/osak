@@ -257,6 +257,7 @@
   .recipeImage{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;border-radius:14px;border:1px solid var(--line);margin-bottom:12px;background:#f1f3ef}
   .recipeImage.clickable{cursor:pointer}
   .modalRecipeImage{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;border-radius:18px;border:1px solid var(--line);margin:12px 0 8px;background:#f1f3ef}
+  .photoCredit{display:block;margin:-4px 0 8px;color:var(--muted);font-size:10px;text-decoration:none}
   .platingHint{font-size:10px;color:var(--muted);line-height:1.5;margin:0 0 12px}
   @media (max-width:340px){
     .nameField,.quantityField,.unitField,.expiryField{grid-column:1/-1}
